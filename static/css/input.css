@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #F8FAFB;
+    --bg-surface: #FFFFFF;
+    --border-subtle: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --accent-primary: #22A6BF;
+    --accent-hover: #1B8599;
+  }
+
+  .dark {
+    --bg-base: #0B1118;
+    --bg-surface: #131C26;
+    --border-subtle: #1E2D3D;
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --accent-primary: #22A6BF;
+    --accent-hover: #45C5DE;
+  }
+}

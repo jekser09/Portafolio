@@ -1,0 +1,49 @@
+# ==============================================================================
+# .gitattributes — Control y Normalización de Archivos en Git
+# ==============================================================================
+# Este archivo define cómo Git maneja los saltos de línea y tipos de archivo.
+# Al estar versionado en el repositorio, garantiza que todos los colaboradores,
+# entornos locales (Windows, macOS) y servidores de producción (Linux/Docker)
+# trabajen con el mismo estándar sin depender de la configuración local de cada dev.
+
+# 1. Regla Global por Defecto
+# 'text=auto': Git detecta automáticamente si un archivo es texto plano o binario.
+# 'eol=lf': Normaliza todos los archivos de texto a LF (Line Feed - estándar Unix).
+# Esto evita advertencias de CRLF y diferencias fantasma en los commits entre Windows y Linux.
+* text=auto eol=lf
+
+# 2. Código Fuente y Configuración (Forzados explícitamente a LF)
+# Garantiza que archivos críticos para Python, contenedores y frontend mantengan LF siempre.
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.lock text eol=lf
+*.env* text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# 3. Scripts de Shell / Bash para Linux y Docker
+# OBLIGATORIO: Si un script de shell (.sh) tiene CRLF de Windows, Linux fallará
+# al ejecutarlo con el error '/bin/bash^M: bad interpreter: No such file or directory'.
+*.sh text eol=lf
+
+# 4. Archivos Binarios (Protección contra corrupción de datos)
+# La directiva 'binary' (equivalente a -text -diff) le indica a Git que NO debe
+# inspeccionar ni alterar ningún byte bajo ninguna circunstancia.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.sqlite3 binary
+*.exe binary

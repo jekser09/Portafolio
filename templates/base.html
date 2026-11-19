@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portafolio Profesional{% endblock title %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS compilado -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+
+    {% block extra_head %}{% endblock extra_head %}
+</head>
+<body class="h-full bg-slate-50 text-slate-900 dark:bg-[#0B1118] dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+    
+    <div class="min-h-full flex flex-col">
+        <!-- Contenido principal inyectado por las apps -->
+        <main class="flex-grow">
+            {% block content %}{% endblock content %}
+        </main>
+    </div>
+
+    <!-- Scripts globales -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>
