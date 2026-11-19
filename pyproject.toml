@@ -7,4 +7,5 @@ dependencies = [
     "granian>=2.8.8",
     "python-dotenv>=1.2.4",
     "ruff>=0.17.6",
+    "whitenoise[brotli]>=6.12.0",
 ]
