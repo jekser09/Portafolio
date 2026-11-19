@@ -16,3 +16,6 @@ staticfiles/
 .ruff_cache/
 bin/
 *.exe
+
+# Carpeta temporal para insumos locales
+temp/

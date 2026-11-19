@@ -93,15 +93,20 @@ El código CSS/Tailwind se escribe bajo metodología **Mobile-First** (`min-widt
 
 ## 5. Modelo de Datos (Django ORM)
 
-Modelos estructurados en la app principal (ej. `portfolio/`):
+Modelos estructurados por dominio y responsabilidad:
 
-1. **`Profile`**: Singleton lógico del titular. Campos: `full_name`, `headline`, `bio`, `location`, `email`, `github_url`, `linkedin_url`, `avatar`.
-2. **`Category`**: Categorías técnicas de proyectos (ej. *Backend*, *Cloud & DevOps*, *Fullstack*). Campos: `name`, `slug`.
-3. **`Technology`**: Catálogo de tecnologías y herramientas. Campos: `name`, `category` (Backend, Frontend, DB, Infra).
-4. **`Experience`**: Trayectoria profesional. Campos: `company`, `role`, `location`, `start_date`, `end_date` (`null=True, blank=True`), `summary`, `is_visible`, `order`.
-5. **`ExperienceHighlight`**: Viñetas de logros específicos asociadas a `Experience` (`ForeignKey`).
-6. **`Certification`**: Certificaciones y educación formal. Campos: `name`, `issuer`, `issue_date`, `credential_id`, `credential_url`, `is_visible`.
-7. **`Project`**: Proyectos y casos de estudio. Campos: `title`, `slug`, `short_description`, `detailed_description` (Markdown), `repo_url`, `live_url`, `category` (`ForeignKey`), `technologies` (`ManyToManyField`), `is_featured`, `is_visible`, `order`.
+### App `curriculum/` (Hoja de Vida y Perfil):
+1. **`Profile`**: Singleton lógico del titular (`full_name`, `headline`, `bio`, `email`, `phone`, `location`, `github_url`, `linkedin_url`, `avatar`).
+2. **`SkillCategory`**: Categorías de habilidades y conocimientos (`name`, `order`).
+3. **`Skill`**: Habilidades técnicas y blandas (`name`, `category` ForeignKey, `is_highlighted`, `order`).
+4. **`Experience`**: Trayectoria laboral (`company`, `role`, `start_date`, `end_date`, `is_current`, `is_visible`, `order`).
+5. **`ExperienceHighlight`**: Viñetas de logros específicos asociadas a `Experience` (`ForeignKey`, `description`, `order`).
+6. **`Education`**: Formación académica (`institution`, `degree`, `year_completed`, `is_in_progress`, `order`).
+7. **`Reference`**: Referencias profesionales (`name`, `role`, `phone`, `email`, `is_visible_on_web`, `order`).
+
+### App `proyectos/` (Catálogo Técnico y Casos de Estudio):
+1. **`ProjectCategory`**: Categorías técnicas de proyectos (ej. *Backend*, *Cloud & DevOps*, *Fullstack*).
+2. **`Project`**: Casos de estudio y aplicaciones (`title`, `slug`, `short_description`, `detailed_description`, `repo_url`, `live_url`, `category`, `skills` ManyToManyField, `is_featured`, `is_visible`, `order`).
 
 ---
 
@@ -123,6 +128,16 @@ Para optimizar velocidad de carga (Core Web Vitals) y evitar problemas de caché
 
 ## 7. Estándares de Código, Documentación y Seguridad
 
+* **Separación Estricta de Capas (Vistas Delgadas vs. Services/Selectors):**
+  * **`views.py` (Capa de Transporte HTTP):** CERO lógica de negocio y CERO consultas ORM directas. Su única responsabilidad es:
+    1. Validar la petición HTTP (métodos GET/POST, headers, parámetros de entrada).
+    2. Invocar la función correspondiente en `services.py` (para mutaciones/acciones) o `selectors.py` (para lecturas/queries).
+    3. Construir y devolver la respuesta HTTP (`render()`, `JsonResponse()`, redirects o códigos de estado).
+  * **`services.py` (Lógica de Negocio y Operaciones de Escritura):** Concentra todas las reglas de negocio, mutaciones, transformaciones de datos, envío de correos y orquestaciones.
+  * **`selectors.py` (Consultas y Operaciones de Lectura):** Concentra las consultas del ORM con optimizaciones (`select_related`, `prefetch_related`, agregaciones), aislando el acceso a datos.
+* **Estándares de JavaScript y Scripts Frontend:**
+  * **Cero JavaScript inline:** Prohibido colocar código JS embebido dentro de etiquetas `<script>` en los templates HTML. Todo código debe residir en archivos externos modulares (`.js`) dentro de las carpetas `static/` correspondientes.
+  * **Uso obligatorio de `defer`:** Toda inclusión de scripts debe usar el atributo `defer` (ej. `<script defer src="{% static '...' %}"></script>`). Al postergar la ejecución hasta que el DOM esté completamente parseado, **no se debe encapsular el código en listeners como `DOMContentLoaded` o `window.onload`**, manteniendo los archivos JS directos, planos y limpios.
 * **Docstrings Google Style:** Obligatorios en vistas, modelos, servicios, selectores y utilidades.
 * **Type Hints:** Obligatorios en todas las firmas de funciones en `services.py` y `selectors.py`.
 * **Optimización de Consultas:** Cero consultas N+1. Obligatorio el uso de `select_related()` y `prefetch_related()`.

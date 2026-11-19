@@ -155,8 +155,8 @@ USE_TZ = True
 # ARCHIVOS ESTÁTICOS Y MEDIOS (STATIC & MEDIA)
 # ==============================================================================
 
-STATIC_URL = "static/"
-MEDIA_URL = "media/"
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
