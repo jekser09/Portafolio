@@ -6,214 +6,298 @@
 {% endblock title %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
     {% if profile %}
     <!-- =======================================================================
-         FICHA TÉCNICA PRINCIPAL / HEADER EDITORIAL
+         BARRA DE CONTROLES EXTERNA (FUERA DE LA HOJA DE VIDA)
          ======================================================================= -->
-    <header class="border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#131C26] rounded-2xl p-6 sm:p-8 md:p-10 mb-12 shadow-sm transition-colors">
-        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-            
-            <div class="space-y-4 max-w-2xl">
-                <!-- Status Badge -->
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-[#22A6BF]/30 font-mono text-xs text-[#22A6BF] font-medium">
-                    <span class="w-2 h-2 rounded-full bg-[#22A6BF] animate-pulse"></span>
-                    <span>Disponible para proyectos y roles Senior/Lead</span>
-                </div>
-                
-                <!-- Titular y Rol -->
-                <div class="space-y-1">
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-slate-100 font-heading">
-                        {{ profile.full_name }}
-                    </h1>
-                    <p class="text-lg sm:text-xl text-[#22A6BF] font-mono font-medium">
-                        {{ profile.headline }}
-                    </p>
-                </div>
-                
-                <!-- Metadatos de contacto y enlaces con iconos -->
-                <div class="flex flex-wrap items-center gap-y-2.5 gap-x-5 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-mono pt-2">
-                    <span class="inline-flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        {{ profile.location }}
-                    </span>
-                    
-                    <a href="mailto:{{ profile.email }}" class="inline-flex items-center gap-1.5 hover:text-[#22A6BF] transition-colors">
-                        <svg class="w-4 h-4 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        {{ profile.email }}
-                    </a>
-                    
-                    <span class="inline-flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        {{ profile.phone }}
-                    </span>
-
-                    {% if profile.github_url %}
-                    <a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-[#22A6BF] transition-colors underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-                        GitHub
-                    </a>
-                    {% endif %}
-
-                    {% if profile.linkedin_url %}
-                    <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 hover:text-[#22A6BF] transition-colors underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        LinkedIn
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Botones de Acción (Tema y PDF) -->
-            <div class="flex items-center gap-3 self-start md:self-auto pt-2 md:pt-0">
-                <!-- Switch Modo Oscuro / Claro -->
-                <button id="theme-toggle" type="button" aria-label="Cambiar tema" class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-[#22A6BF] hover:text-[#22A6BF] transition-colors shadow-sm">
-                    <svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
+    <div aria-label="Controles de presentación de Hoja de Vida" class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] p-4 shadow-xs transition-colors">
+        <div class="flex flex-wrap items-center gap-3">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8]">
+                Presentación
+            </span>
+            <div role="group" aria-label="Modo de visualización de la Hoja de Vida" class="inline-flex items-center rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] p-1 gap-1">
+                <button id="layout-two-col-btn" type="button" data-cv-layout-btn="two-col" aria-pressed="true" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-[#22A6BF] bg-[#22A6BF] text-white font-mono text-xs font-semibold transition-all shadow-xs cursor-pointer">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4H5a2 2 0 00-2 2v12a2 2 0 002 2h4m0-16v16m0-16h10a2 2 0 012 2v12a2 2 0 01-2 2H9"/></svg>
+                    <span>2 Columnas</span>
                 </button>
-
-                <!-- Botón Descargar CV -->
-                <button id="download-cv-btn" type="button" class="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-[#22A6BF] hover:bg-[#1B8599] text-white font-mono text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-sm hover:shadow-cyan-500/20 hover:shadow-lg active:scale-95">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>Descargar CV (PDF)</span>
+                <button id="layout-ats-btn" type="button" data-cv-layout-btn="ats" aria-pressed="false" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-transparent bg-transparent text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-mono text-xs font-semibold transition-all cursor-pointer">
+                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h10"/></svg>
+                    <span>1 Columna</span>
                 </button>
             </div>
         </div>
-    </header>
+
+        <button id="download-cv-btn" type="button" class="inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-xl bg-[#22A6BF] hover:bg-[#1B8599] text-white font-mono text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-xs hover:shadow-cyan-500/20 hover:shadow-lg active:scale-95 cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span id="download-cv-label">Descargar CV (PDF)</span>
+        </button>
+    </div>
 
     <!-- =======================================================================
-         SECCIONES DEL CV (ESTRUCTURA EDITORIAL TÉCNICA)
+         DOCUMENTO HOJA DE VIDA (CERO BOTONES INTERNOS)
          ======================================================================= -->
-    <div class="space-y-14">
-        
-        <!-- 01. PERFIL PROFESIONAL -->
-        <section aria-labelledby="perfil-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 border-b border-slate-200/80 dark:border-slate-800/80 pb-12">
-            <div class="md:col-span-3">
-                <h2 id="perfil-heading" class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
-                    // 01. Perfil Profesional
-                </h2>
-            </div>
-            <div class="md:col-span-9 prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed space-y-4">
-                {{ profile.bio|linebreaks }}
-            </div>
-        </section>
+    <article id="cv-document" class="border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] rounded-2xl p-6 sm:p-10 md:p-12 shadow-sm transition-colors">
 
-        <!-- 02. HABILIDADES Y CONOCIMIENTOS -->
-        <section aria-labelledby="skills-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 border-b border-slate-200/80 dark:border-slate-800/80 pb-12">
-            <div class="md:col-span-3">
-                <h2 id="skills-heading" class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
-                    // 02. Habilidades & Conocimientos
-                </h2>
+        <!-- ENCABEZADO EDITORIAL DEL DOCUMENTO -->
+        <header class="border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-8 mb-10">
+            <div class="w-full text-center space-y-2">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-[#F1F5F9] font-heading">
+                    {{ profile.full_name }}
+                </h1>
+                <p class="text-lg sm:text-xl text-[#22A6BF] font-mono font-medium">
+                    {{ profile.headline }}
+                </p>
             </div>
-            <div class="md:col-span-9 space-y-7">
-                {% for category in skill_categories %}
-                <div class="space-y-2.5">
-                    <h3 class="text-xs font-mono font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#22A6BF]"></span>
-                        <span>{{ category.name }}</span>
-                    </h3>
-                    <div class="flex flex-wrap gap-2 pt-1">
-                        {% for skill in category.skills.all %}
-                        <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono border transition-colors {% if skill.is_highlighted %}bg-cyan-500/10 border-[#22A6BF]/40 text-[#22A6BF] dark:text-cyan-200 font-semibold shadow-xs{% else %}bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700{% endif %}">
-                            {{ skill.name }}
-                        </span>
+        </header>
+
+        <!-- GRILLA ADAPTATIVA (2 COLUMNAS <-> 1 COLUMNA ATS) -->
+        <div id="cv-layout-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+
+            <!-- COLUMNA LATERAL (En 2 columnas) / ELEMENTOS ORDENADOS (En 1 columna ATS) -->
+            <div id="cv-side-col" class="lg:col-span-4 space-y-10">
+
+                <!-- CONTACTO Y UBICACIÓN -->
+                <section aria-labelledby="contacto-heading" class="order-1">
+                    <div class="flex items-center gap-3 border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-3 mb-6">
+                        <span class="w-1.5 h-6 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                        <h2 id="contacto-heading" class="font-heading text-base sm:text-lg font-bold uppercase tracking-wider text-slate-900 dark:text-[#F1F5F9]">
+                            Contacto y Ubicación
+                        </h2>
+                    </div>
+
+                    <div id="contact-cards-grid" class="grid grid-cols-1 gap-3">
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ profile.location|urlencode }}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ubicación en Google Maps: {{ profile.location }}" class="flex flex-col justify-between p-3.5 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/70 dark:bg-[#0B1118]/60 hover:border-[#22A6BF] hover:bg-cyan-500/5 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between gap-2 w-full">
+                                <span class="font-mono text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-[#94A3B8] group-hover:text-[#22A6BF] transition-colors">
+                                    Ubicación
+                                </span>
+                                <span class="w-6 h-6 rounded-md bg-cyan-500/10 border border-[#22A6BF]/30 text-[#22A6BF] flex items-center justify-center shrink-0" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </span>
+                            </div>
+                            <div class="mt-2 w-full min-w-0">
+                                <span title="{{ profile.location }}" class="block w-full text-xs sm:text-sm font-mono text-slate-900 dark:text-[#F1F5F9] group-hover:text-[#22A6BF] transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {{ profile.location }}
+                                </span>
+                            </div>
+                        </a>
+
+                        <div role="button" tabindex="0" data-copy-text="{{ profile.email }}" data-copy-label="Email" aria-label="Copiar correo electrónico {{ profile.email }}" class="flex flex-col justify-between p-3.5 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/70 dark:bg-[#0B1118]/60 hover:border-[#22A6BF] hover:bg-cyan-500/5 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between gap-2 w-full">
+                                <span data-copy-feedback class="font-mono text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-[#94A3B8] group-hover:text-[#22A6BF] transition-colors">
+                                    Email
+                                </span>
+                                <span class="w-6 h-6 rounded-md bg-cyan-500/10 border border-[#22A6BF]/30 text-[#22A6BF] flex items-center justify-center shrink-0" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                </span>
+                            </div>
+                            <div class="mt-2 w-full min-w-0">
+                                <span title="{{ profile.email }}" class="block w-full text-xs sm:text-sm font-mono text-slate-900 dark:text-[#F1F5F9] group-hover:text-[#22A6BF] transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {{ profile.email }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div role="button" tabindex="0" data-copy-text="{{ profile.phone }}" data-copy-label="Teléfono" aria-label="Copiar teléfono {{ profile.phone }}" class="flex flex-col justify-between p-3.5 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/70 dark:bg-[#0B1118]/60 hover:border-[#22A6BF] hover:bg-cyan-500/5 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between gap-2 w-full">
+                                <span data-copy-feedback class="font-mono text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-[#94A3B8] group-hover:text-[#22A6BF] transition-colors">
+                                    Teléfono
+                                </span>
+                                <span class="w-6 h-6 rounded-md bg-cyan-500/10 border border-[#22A6BF]/30 text-[#22A6BF] flex items-center justify-center shrink-0" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                </span>
+                            </div>
+                            <div class="mt-2 w-full min-w-0">
+                                <span title="{{ profile.phone }}" class="block w-full text-xs sm:text-sm font-mono text-slate-900 dark:text-[#F1F5F9] group-hover:text-[#22A6BF] transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {{ profile.phone }}
+                                </span>
+                            </div>
+                        </div>
+
+                        {% if profile.github_url %}
+                        <a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil de GitHub en nueva pestaña" class="flex flex-col justify-between p-3.5 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/70 dark:bg-[#0B1118]/60 hover:border-[#22A6BF] hover:bg-cyan-500/5 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between gap-2 w-full">
+                                <span class="font-mono text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-[#94A3B8] group-hover:text-[#22A6BF] transition-colors">
+                                    GitHub
+                                </span>
+                                <span class="w-6 h-6 rounded-md bg-cyan-500/10 border border-[#22A6BF]/30 text-[#22A6BF] flex items-center justify-center shrink-0" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                                </span>
+                            </div>
+                            <div class="mt-2 w-full min-w-0">
+                                <span title="{{ profile.github_url|cut:'https://'|cut:'http://' }}" class="block w-full text-xs sm:text-sm font-mono text-slate-900 dark:text-[#F1F5F9] group-hover:text-[#22A6BF] transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {{ profile.github_url|cut:"https://"|cut:"http://" }}
+                                </span>
+                            </div>
+                        </a>
+                        {% endif %}
+
+                        {% if profile.linkedin_url %}
+                        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="Abrir perfil de LinkedIn en nueva pestaña" class="flex flex-col justify-between p-3.5 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/70 dark:bg-[#0B1118]/60 hover:border-[#22A6BF] hover:bg-cyan-500/5 transition-all cursor-pointer group">
+                            <div class="flex items-center justify-between gap-2 w-full">
+                                <span class="font-mono text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-[#94A3B8] group-hover:text-[#22A6BF] transition-colors">
+                                    LinkedIn
+                                </span>
+                                <span class="w-6 h-6 rounded-md bg-cyan-500/10 border border-[#22A6BF]/30 text-[#22A6BF] flex items-center justify-center shrink-0" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                </span>
+                            </div>
+                            <div class="mt-2 w-full min-w-0">
+                                <span title="{{ profile.linkedin_url|cut:'https://'|cut:'http://' }}" class="block w-full text-xs sm:text-sm font-mono text-slate-900 dark:text-[#F1F5F9] group-hover:text-[#22A6BF] transition-colors whitespace-nowrap overflow-hidden text-ellipsis">
+                                    {{ profile.linkedin_url|cut:"https://"|cut:"http://" }}
+                                </span>
+                            </div>
+                        </a>
+                        {% endif %}
+                    </div>
+                </section>
+
+                <!-- HABILIDADES Y CONOCIMIENTOS -->
+                <section aria-labelledby="skills-heading" class="order-3">
+                    <div class="flex items-center gap-3 border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-3 mb-6">
+                        <span class="w-1.5 h-6 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                        <h2 id="skills-heading" class="font-heading text-base sm:text-lg font-bold uppercase tracking-wider text-slate-900 dark:text-[#F1F5F9]">
+                            Habilidades y Conocimientos
+                        </h2>
+                    </div>
+
+                    <div class="space-y-6">
+                        {% for category in skill_categories %}
+                        <div class="space-y-2.5">
+                            <h3 class="text-xs font-mono font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#22A6BF]" aria-hidden="true"></span>
+                                <span>{{ category.name }}</span>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 pt-0.5">
+                                {% for skill in category.skills.all %}
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono border transition-colors {% if skill.is_highlighted %}bg-cyan-500/10 border-[#22A6BF]/40 text-[#22A6BF] dark:text-cyan-200 font-semibold shadow-xs{% else %}bg-slate-50 dark:bg-[#0B1118]/60 border-slate-200 dark:border-[#1E2D3D] text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600{% endif %}">
+                                    {{ skill.name }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-sm font-mono text-slate-500 dark:text-[#94A3B8]">No hay habilidades registradas.</p>
                         {% endfor %}
                     </div>
-                </div>
-                {% empty %}
-                <p class="text-sm font-mono text-slate-500">No hay habilidades registradas.</p>
-                {% endfor %}
-            </div>
-        </section>
+                </section>
 
-        <!-- 03. EXPERIENCIA LABORAL -->
-        <section aria-labelledby="experiencia-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 border-b border-slate-200/80 dark:border-slate-800/80 pb-12">
-            <div class="md:col-span-3">
-                <h2 id="experiencia-heading" class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
-                    // 03. Experiencia Laboral
-                </h2>
-            </div>
-            <div class="md:col-span-9 space-y-10">
-                {% for exp in experiences %}
-                <article class="p-6 rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-white/50 dark:bg-slate-900/30 space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 border-b border-slate-100 dark:border-slate-800/60 pb-3">
-                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white font-heading">
-                            {{ exp.role }}
-                        </h3>
-                        <span class="font-mono text-xs text-[#22A6BF] font-semibold px-2 py-0.5 rounded bg-cyan-500/10 border border-[#22A6BF]/30 self-start sm:self-auto">
-                            {{ exp.start_date|date:"F Y"|capfirst }} a {% if exp.is_current or not exp.end_date %}Presente{% else %}{{ exp.end_date|date:"F Y"|capfirst }}{% endif %}
-                        </span>
-                    </div>
-                    
-                    <div class="font-mono text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
-                        <span class="text-slate-400">Empresa:</span>
-                        <strong class="text-slate-800 dark:text-slate-200 uppercase tracking-wide">{{ exp.company }}</strong>
+                <!-- FORMACIÓN ACADÉMICA -->
+                <section aria-labelledby="educacion-heading" class="order-5">
+                    <div class="flex items-center gap-3 border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-3 mb-6">
+                        <span class="w-1.5 h-6 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                        <h2 id="educacion-heading" class="font-heading text-base sm:text-lg font-bold uppercase tracking-wider text-slate-900 dark:text-[#F1F5F9]">
+                            Formación Académica
+                        </h2>
                     </div>
 
-                    <ul class="space-y-2.5 list-none pl-0 text-sm text-slate-700 dark:text-slate-300 pt-1">
-                        {% for highlight in exp.highlights.all %}
-                        <li class="relative pl-5 before:content-['—'] before:absolute before:left-0 before:text-[#22A6BF] before:font-bold leading-relaxed">
-                            {{ highlight.description }}
-                        </li>
+                    <div class="space-y-4">
+                        {% for edu in education %}
+                        <div class="border-l-2 border-[#22A6BF] pl-4 py-1 space-y-1">
+                            <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-[#F1F5F9]">
+                                {{ edu.degree }}
+                            </h3>
+                            <p class="font-mono text-xs text-slate-600 dark:text-[#94A3B8]">
+                                {{ edu.institution }}
+                            </p>
+                            <span class="inline-block font-mono text-xs text-[#22A6BF] font-medium">
+                                {{ edu.year_completed }} {% if edu.is_in_progress %}(En curso){% else %}(Culminado){% endif %}
+                            </span>
+                        </div>
+                        {% empty %}
+                        <p class="text-sm font-mono text-slate-500 dark:text-[#94A3B8]">No hay registros educativos.</p>
                         {% endfor %}
-                    </ul>
-                </article>
-                {% empty %}
-                <p class="text-sm font-mono text-slate-500">No hay experiencias registradas.</p>
-                {% endfor %}
-            </div>
-        </section>
-
-        <!-- 04. FORMACIÓN ACADÉMICA -->
-        <section aria-labelledby="educacion-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 {% if references %}border-b border-slate-200/80 dark:border-slate-800/80 pb-12{% endif %}">
-            <div class="md:col-span-3">
-                <h2 id="educacion-heading" class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
-                    // 04. Formación Académica
-                </h2>
-            </div>
-            <div class="md:col-span-9 space-y-4">
-                {% for edu in education %}
-                <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 border-l-2 border-[#22A6BF] pl-4 py-1">
-                    <div>
-                        <h3 class="text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-100">
-                            {{ edu.degree }}
-                        </h3>
-                        <p class="font-mono text-xs text-slate-600 dark:text-slate-400">
-                            {{ edu.institution }}
-                        </p>
                     </div>
-                    <span class="font-mono text-xs text-slate-500 dark:text-slate-400">
-                        {{ edu.year_completed }} {% if edu.is_in_progress %}(En curso){% endif %}
-                    </span>
-                </div>
-                {% empty %}
-                <p class="text-sm font-mono text-slate-500">No hay registros educativos.</p>
-                {% endfor %}
-            </div>
-        </section>
+                </section>
 
-        {% if references %}
-        <!-- 05. REFERENCIAS LABORALES (SOLO SI TIENEN VISIBILIDAD WEB HABILITADA) -->
-        <section aria-labelledby="referencias-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
-            <div class="md:col-span-3">
-                <h2 id="referencias-heading" class="text-xs font-mono font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">
-                    // 05. Referencias Laborales
-                </h2>
-            </div>
-            <div class="md:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {% for ref in references %}
-                <div class="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-white/40 dark:bg-slate-900/40 space-y-1">
-                    <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ ref.name }}</h3>
-                    <p class="font-mono text-xs text-[#22A6BF]">{{ ref.role }}</p>
-                    <p class="font-mono text-xs text-slate-600 dark:text-slate-400">Tel: {{ ref.phone }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
+                {% if references %}
+                <!-- REFERENCIAS LABORALES (SOLO SI TIENEN VISIBILIDAD WEB HABILITADA) -->
+                <section aria-labelledby="referencias-heading" class="order-6">
+                    <div class="flex items-center gap-3 border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-3 mb-6">
+                        <span class="w-1.5 h-6 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                        <h2 id="referencias-heading" class="font-heading text-base sm:text-lg font-bold uppercase tracking-wider text-slate-900 dark:text-[#F1F5F9]">
+                            Referencias Laborales
+                        </h2>
+                    </div>
 
-    </div>
+                    <div class="grid grid-cols-1 gap-3">
+                        {% for ref in references %}
+                        <div class="p-4 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/70 dark:bg-[#0B1118]/60 space-y-1">
+                            <h3 class="text-sm font-semibold text-slate-900 dark:text-[#F1F5F9]">{{ ref.name }}</h3>
+                            <p class="font-mono text-xs text-[#22A6BF]">{{ ref.role }}</p>
+                            <p class="font-mono text-xs text-slate-600 dark:text-[#94A3B8]">Tel: {{ ref.phone }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+
+            </div>
+
+            <!-- COLUMNA PRINCIPAL (En 2 columnas) / ELEMENTOS ORDENADOS (En 1 columna ATS) -->
+            <div id="cv-main-col" class="lg:col-span-8 space-y-10">
+
+                <!-- PERFIL PROFESIONAL -->
+                <section aria-labelledby="perfil-heading" class="order-2">
+                    <div class="flex items-center gap-3 border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-3 mb-6">
+                        <span class="w-1.5 h-6 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                        <h2 id="perfil-heading" class="font-heading text-base sm:text-lg font-bold uppercase tracking-wider text-slate-900 dark:text-[#F1F5F9]">
+                            Perfil Profesional
+                        </h2>
+                    </div>
+
+                    <div class="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed text-justify space-y-4">
+                        {{ profile.bio|linebreaks }}
+                    </div>
+                </section>
+
+                <!-- EXPERIENCIA LABORAL -->
+                <section aria-labelledby="experiencia-heading" class="order-4">
+                    <div class="flex items-center gap-3 border-b-2 border-slate-200 dark:border-[#1E2D3D] pb-3 mb-6">
+                        <span class="w-1.5 h-6 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                        <h2 id="experiencia-heading" class="font-heading text-base sm:text-lg font-bold uppercase tracking-wider text-slate-900 dark:text-[#F1F5F9]">
+                            Experiencia Laboral
+                        </h2>
+                    </div>
+
+                    <div class="space-y-6">
+                        {% for exp in experiences %}
+                        <article class="p-6 rounded-xl border border-slate-200/90 dark:border-[#1E2D3D] bg-slate-50/60 dark:bg-[#0B1118]/50 space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 border-b border-slate-200/80 dark:border-[#1E2D3D] pb-3">
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-[#F1F5F9] font-heading">
+                                    {{ exp.role }}
+                                </h3>
+                                <span class="font-mono text-xs text-[#22A6BF] font-semibold px-2.5 py-1 rounded-md bg-cyan-500/10 border border-[#22A6BF]/30 self-start sm:self-auto shrink-0">
+                                    {{ exp.start_date|date:"F Y"|capfirst }} a {% if exp.is_current or not exp.end_date %}Presente{% else %}{{ exp.end_date|date:"F Y"|capfirst }}{% endif %}
+                                </span>
+                            </div>
+
+                            <div class="font-mono text-xs text-slate-600 dark:text-[#94A3B8] flex items-center gap-1.5">
+                                <span class="text-slate-400 dark:text-slate-500">Empresa:</span>
+                                <strong class="text-slate-900 dark:text-slate-200 uppercase tracking-wide">{{ exp.company }}</strong>
+                            </div>
+
+                            <ul class="space-y-2.5 list-none pl-0 text-sm text-slate-700 dark:text-slate-300 pt-1">
+                                {% for highlight in exp.highlights.all %}
+                                <li class="relative pl-5 before:content-['—'] before:absolute before:left-0 before:text-[#22A6BF] before:font-bold leading-relaxed text-justify">
+                                    {{ highlight.description }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </article>
+                        {% empty %}
+                        <p class="text-sm font-mono text-slate-500 dark:text-[#94A3B8]">No hay experiencias registradas.</p>
+                        {% endfor %}
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+    </article>
 
     <!-- Inyección segura de datos del CV para pdfmake -->
     {{ cv_payload|json_script:"cv-data" }}
@@ -221,8 +305,8 @@
     {% else %}
     <!-- Estado vacío si aún no se ha creado el perfil -->
     <div class="text-center py-20 space-y-4">
-        <h1 class="text-2xl font-bold font-heading text-slate-900 dark:text-white">Perfil no configurado</h1>
-        <p class="text-slate-600 dark:text-slate-400 font-mono text-sm">
+        <h1 class="text-2xl font-bold font-heading text-slate-900 dark:text-[#F1F5F9]">Perfil no configurado</h1>
+        <p class="text-slate-600 dark:text-[#94A3B8] font-mono text-sm">
             Ingresá al <a href="/admin/" class="text-[#22A6BF] underline">Django Admin</a> para crear tu Perfil Profesional inicial.
         </p>
     </div>
@@ -232,6 +316,7 @@
 {% endblock content %}
 
 {% block extra_js %}
-<!-- Script dedicado para eventos de CV cargado con defer (Cero JS inline) -->
+<!-- Script dedicado para generación de PDF vectorial y presentación de CV cargado con defer (Cero JS inline) -->
+<script defer src="{% static 'curriculum/js/cv-pdf.js' %}"></script>
 <script defer src="{% static 'curriculum/js/cv.js' %}"></script>
 {% endblock extra_js %}

@@ -1,9 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="es" class="h-full">
+<html lang="es" class="h-full dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}" sizes="32x32">
     <title>{% block title %}Portafolio Profesional{% endblock title %}</title>
 
     <!-- Google Fonts -->
@@ -16,9 +17,39 @@
 
     {% block extra_head %}{% endblock extra_head %}
 </head>
-<body class="h-full bg-slate-50 text-slate-900 dark:bg-[#0B1118] dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+<body class="h-full bg-[#F8FAFB] text-[#0F172A] dark:bg-[#0B1118] dark:text-[#F1F5F9] antialiased font-sans transition-colors duration-200">
     
     <div class="min-h-full flex flex-col">
+        <!-- Barra de Navegación Global -->
+        <header class="sticky top-0 z-40 border-b border-slate-200 dark:border-[#1E2D3D] bg-white/90 dark:bg-[#0B1118]/90 backdrop-blur-md transition-colors">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-0 md:h-16 flex flex-wrap items-center justify-between gap-x-4 gap-y-2.5">
+                <!-- Marca / Identidad -->
+                <a href="/CV/" class="inline-flex items-center gap-2.5 font-mono text-xs sm:text-sm font-semibold tracking-wider text-slate-900 dark:text-[#F1F5F9] hover:text-[#22A6BF] dark:hover:text-[#22A6BF] transition-colors shrink-0">
+                    <span class="w-2.5 h-2.5 rounded-xs bg-[#22A6BF] shrink-0" aria-hidden="true"></span>
+                    <span>JOHAND CASTRO <span class="text-[#22A6BF]">//</span> PORTAFOLIO</span>
+                </a>
+
+                <!-- Enlaces de Navegación -->
+                <nav aria-label="Navegación principal" class="order-last md:order-none w-full md:w-auto flex items-center gap-1.5 pt-2 md:pt-0 border-t md:border-t-0 border-slate-200/80 dark:border-[#1E2D3D]/80 overflow-x-auto">
+                    <a href="/CV/" class="px-3.5 py-2 rounded-lg font-mono text-xs font-medium whitespace-nowrap transition-colors border {% if '/CV/' in request.path %}bg-[#22A6BF]/10 text-[#22A6BF] border-[#22A6BF]/30 font-semibold{% else %}border-transparent text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#131C26]{% endif %}">
+                        Hoja de Vida
+                    </a>
+                    <a href="/prodep/" class="px-3.5 py-2 rounded-lg font-mono text-xs font-medium whitespace-nowrap transition-colors border {% if '/prodep/' in request.path %}bg-[#22A6BF]/10 text-[#22A6BF] border-[#22A6BF]/30 font-semibold{% else %}border-transparent text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#131C26]{% endif %}">
+                        Proyectos
+                    </a>
+                    <a href="/chat/" class="px-3.5 py-2 rounded-lg font-mono text-xs font-medium whitespace-nowrap transition-colors border {% if '/chat/' in request.path %}bg-[#22A6BF]/10 text-[#22A6BF] border-[#22A6BF]/30 font-semibold{% else %}border-transparent text-slate-600 dark:text-[#94A3B8] hover:text-slate-900 dark:hover:text-[#F1F5F9] hover:bg-slate-100 dark:hover:bg-[#131C26]{% endif %}">
+                        Asistente IA
+                    </a>
+                </nav>
+
+                <!-- Control Global de Tema -->
+                <button id="theme-toggle" type="button" aria-label="Cambiar tema" title="Alternar modo oscuro / claro" class="p-2.5 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#131C26] text-slate-600 dark:text-slate-300 hover:border-[#22A6BF] hover:text-[#22A6BF] transition-colors shadow-xs cursor-pointer">
+                    <svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+        </header>
+
         <!-- Contenido principal inyectado por las apps -->
         <main class="flex-grow">
             {% block content %}{% endblock content %}
