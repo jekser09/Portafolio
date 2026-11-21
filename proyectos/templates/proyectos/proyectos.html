@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Proyectos &amp; Casos de Estudio — Portafolio Profesional{% endblock title %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-8">
+
+    <!-- =======================================================================
+         ENCABEZADO EDITORIAL DEL CATÁLOGO
+         ======================================================================= -->
+    <section aria-labelledby="projects-page-heading" class="rounded-2xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] p-6 sm:p-8 shadow-xs transition-colors">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div class="space-y-3 max-w-3xl">
+                <div class="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-[#22A6BF]">
+                    <span class="w-2 h-2 rounded-xs bg-[#22A6BF]" aria-hidden="true"></span>
+                    <span>Catálogo Técnico // Soluciones</span>
+                </div>
+                <h1 id="projects-page-heading" class="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-[#F1F5F9]">
+                    Proyectos &amp; Casos de Estudio
+                </h1>
+                <p class="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-[#94A3B8]">
+                    Soluciones organizadas por dominio funcional, stack tecnológico y tipo de entregable:
+                    aplicaciones web con previsualización en vivo, APIs documentadas con enfoque Zero-Exposure y herramientas desktop.
+                </p>
+            </div>
+
+            <div class="shrink-0">
+                <span id="projects-counter" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] font-mono text-xs font-semibold text-slate-700 dark:text-[#F1F5F9]">
+                    {{ projects|length }} proyecto{{ projects|length|pluralize:"s" }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =======================================================================
+         PANEL DE FILTRADO REACTIVO (CATEGORÍA FUNCIONAL + STACK + BÚSQUEDA)
+         ======================================================================= -->
+    <section aria-label="Filtros del catálogo de proyectos" class="rounded-2xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] p-5 sm:p-6 shadow-xs space-y-5 transition-colors">
+        <!-- Buscador textual y botón limpiar -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <div class="relative flex-grow">
+                <label for="project-search-input" class="sr-only">Buscar proyectos por tecnología, categoría o título</label>
+                <span class="pointer-events-none absolute inset-y-0 left-3.5 flex items-center text-slate-400 dark:text-[#94A3B8]" aria-hidden="true">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </span>
+                <input
+                    id="project-search-input"
+                    type="search"
+                    autocomplete="off"
+                    placeholder="Filtrar por tecnología, categoría o nombre (ej: PYTHON, FastAPI, RAG)..."
+                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] text-sm text-slate-900 dark:text-[#F1F5F9] placeholder:text-slate-400 dark:placeholder:text-[#94A3B8] focus:outline-none focus:border-[#22A6BF] focus:ring-2 focus:ring-[#22A6BF]/20 transition-colors"
+                >
+            </div>
+            <button
+                id="clear-filters-btn"
+                type="button"
+                class="hidden inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] hover:border-[#22A6BF] text-slate-700 dark:text-[#F1F5F9] hover:text-[#22A6BF] font-mono text-xs font-semibold transition-colors cursor-pointer shrink-0"
+            >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                <span>Limpiar filtros</span>
+            </button>
+        </div>
+
+        <!-- Chips de categoría funcional -->
+        <div class="space-y-2">
+            <p class="font-mono text-[11px] font-semibold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8]">
+                Categoría Funcional
+            </p>
+            <div role="group" aria-label="Filtrar por categoría funcional" class="flex flex-wrap gap-2">
+                <button
+                    type="button"
+                    data-category-filter="all"
+                    aria-pressed="true"
+                    class="px-3.5 py-1.5 rounded-lg border border-[#22A6BF] bg-[#22A6BF] text-white font-mono text-xs font-semibold transition-all cursor-pointer shadow-xs"
+                >
+                    Todas
+                </button>
+                {% for category in categories %}
+                <button
+                    type="button"
+                    data-category-filter="{{ category.slug }}"
+                    aria-pressed="false"
+                    class="px-3.5 py-1.5 rounded-lg border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] text-slate-600 dark:text-[#94A3B8] hover:border-[#22A6BF] hover:text-[#22A6BF] font-mono text-xs font-medium transition-all cursor-pointer"
+                >
+                    {{ category.name }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Chips de stack tecnológico -->
+        {% if skills %}
+        <div class="space-y-2 pt-2 border-t border-slate-200/80 dark:border-[#1E2D3D]/80">
+            <p class="font-mono text-[11px] font-semibold uppercase tracking-widest text-slate-500 dark:text-[#94A3B8]">
+                Stack Tecnológico
+            </p>
+            <div role="group" aria-label="Filtrar por tecnología" class="flex flex-wrap gap-1.5">
+                {% for skill in skills %}
+                <button
+                    type="button"
+                    data-skill-filter="{{ skill.name }}"
+                    aria-pressed="false"
+                    class="px-2.5 py-1 rounded-md border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] text-slate-600 dark:text-[#94A3B8] hover:border-[#22A6BF] hover:text-[#22A6BF] font-mono text-[11px] font-medium transition-all cursor-pointer"
+                >
+                    {{ skill.name }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- =======================================================================
+         GRILLA DE TARJETAS DE PROYECTOS
+         ======================================================================= -->
+    {% if projects %}
+    <section aria-label="Listado de proyectos">
+        <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            {% for project in projects %}
+            <article
+                data-project-card
+                data-scroll-reveal
+                data-project-slug="{{ project.slug }}"
+                data-category-slug="{{ project.category.slug }}"
+                data-project-type="{{ project.project_type }}"
+                data-skills="{% for skill in project.skills.all %}{{ skill.name|lower }}{% if not forloop.last %}|{% endif %}{% endfor %}"
+                data-search-text="{{ project.title|lower }} {{ project.category.name|lower }} {{ project.get_project_type_display|lower }} {{ project.short_description|lower }} {% for skill in project.skills.all %}{{ skill.name|lower }} {% endfor %}"
+                class="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] shadow-xs hover:border-[#22A6BF] hover:-translate-y-1 hover:shadow-lg opacity-0 translate-y-4 transition-all duration-500 ease-out"
+            >
+                <!-- Cabecera técnica estilo ventana -->
+                <div class="px-4 py-2.5 border-b border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="px-2 py-0.5 rounded-md bg-[#22A6BF]/15 border border-[#22A6BF]/30 font-mono text-[11px] font-semibold text-[#22A6BF] truncate">
+                            {{ project.category.name }}
+                        </span>
+                        <span class="px-2 py-0.5 rounded-md border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]">
+                            {{ project.project_type }}
+                        </span>
+                    </div>
+
+                    {% if project.is_featured %}
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/30 font-mono text-[10px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true"></span>
+                        Destacado
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- Viewport de previsualización -->
+                <div class="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-[#0B1118] border-b border-slate-200 dark:border-[#1E2D3D]">
+                    {% if project.can_embed_preview %}
+                    <div data-iframe-loader class="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center bg-slate-100 dark:bg-[#0B1118]">
+                        <span class="w-7 h-7 rounded-full border-2 border-[#22A6BF]/30 border-t-[#22A6BF] animate-spin" aria-hidden="true"></span>
+                        <span class="font-mono text-[11px] text-slate-500 dark:text-[#94A3B8]">
+                            Cargando vista previa en vivo...
+                        </span>
+                    </div>
+                    <iframe
+                        data-preview-iframe
+                        data-src="{{ project.live_url }}"
+                        title="Vista previa de {{ project.title }}"
+                        sandbox="allow-scripts allow-same-origin"
+                        loading="lazy"
+                        class="relative z-10 w-[400%] h-[400%] origin-top-left scale-25 pointer-events-none border-0 opacity-0 transition-opacity duration-500 bg-white"
+                    ></iframe>
+                    {% elif project.preview_image %}
+                    <img
+                        src="{{ project.preview_image.url }}"
+                        alt="Vista previa de {{ project.title }}"
+                        loading="lazy"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    >
+                    {% else %}
+                    <div class="h-full w-full p-5 flex flex-col justify-between bg-gradient-to-br from-slate-50 via-white to-cyan-50/60 dark:from-[#0B1118] dark:via-[#131C26] dark:to-[#0B1118] group-hover:scale-[1.02] transition-transform duration-500">
+                        <div class="flex items-start justify-between gap-3">
+                            <span class="inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-widest text-[#22A6BF]">
+                                {% if project.project_type == "API" %}
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <span>Blueprint API // Zero-Exposure</span>
+                                {% elif project.project_type == "DESKTOP" %}
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span>Aplicación Desktop // Release</span>
+                                {% else %}
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg>
+                                <span>Entorno Web // Ficha Técnica</span>
+                                {% endif %}
+                            </span>
+                            <span class="font-mono text-[10px] text-slate-400 dark:text-[#94A3B8]">
+                                /{{ project.slug }}
+                            </span>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <p class="font-mono text-xs text-slate-500 dark:text-[#94A3B8]">
+                                {{ project.get_project_type_display }}
+                            </p>
+                            <div class="flex flex-wrap gap-1.5">
+                                {% for skill in project.skills.all|slice:":4" %}
+                                <span class="px-2 py-0.5 rounded-md border border-slate-200 dark:border-[#1E2D3D] bg-white/80 dark:bg-[#0B1118]/80 font-mono text-[10px] text-slate-700 dark:text-[#F1F5F9]">
+                                    {{ skill.name }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Cuerpo de la tarjeta -->
+                <div class="p-6 flex flex-col flex-grow gap-4">
+                    <div class="space-y-2">
+                        <h2 class="font-heading text-xl font-bold text-slate-900 dark:text-[#F1F5F9] group-hover:text-[#22A6BF] transition-colors">
+                            {{ project.title }}
+                        </h2>
+                        <p class="text-sm leading-relaxed text-slate-600 dark:text-[#94A3B8] text-justify">
+                            {{ project.short_description }}
+                        </p>
+                    </div>
+
+                    {% if project.skills.all %}
+                    <div class="flex flex-wrap gap-1.5" aria-label="Stack tecnológico de {{ project.title }}">
+                        {% for skill in project.skills.all %}
+                        <button
+                            type="button"
+                            data-skill-filter="{{ skill.name }}"
+                            aria-pressed="false"
+                            class="px-2.5 py-1 rounded-md border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] text-slate-600 dark:text-[#94A3B8] hover:border-[#22A6BF] hover:text-[#22A6BF] font-mono text-[11px] font-medium transition-colors cursor-pointer"
+                        >
+                            {{ skill.name }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Acciones y visibilidad de repositorio -->
+                    <div class="mt-auto pt-4 border-t border-slate-200/80 dark:border-[#1E2D3D] flex flex-wrap items-center justify-between gap-2.5">
+                        <div class="flex flex-wrap items-center gap-2">
+                            {% if project.live_url %}
+                            <a
+                                href="{{ project.live_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#22A6BF] hover:bg-[#1B8599] text-white font-mono text-xs font-semibold transition-colors shadow-xs"
+                            >
+                                <span>{% if project.project_type == "WEB" %}Abrir Aplicación{% elif project.project_type == "API" %}Ver Endpoint / Demo{% else %}Ver Release / Descargar{% endif %}</span>
+                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                            </a>
+                            {% endif %}
+
+                            {% if project.has_technical_docs %}
+                            <button
+                                type="button"
+                                data-open-docs="{{ project.slug }}"
+                                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] hover:border-[#22A6BF] text-slate-700 dark:text-[#F1F5F9] hover:text-[#22A6BF] font-mono text-xs font-semibold transition-colors cursor-pointer"
+                            >
+                                <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <span>Documentación Técnica</span>
+                            </button>
+                            {% endif %}
+                        </div>
+
+                        {% if project.has_public_repo %}
+                        <a
+                            href="{{ project.repo_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Ver repositorio público de {{ project.title }}"
+                            class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] hover:border-[#22A6BF] text-slate-700 dark:text-[#F1F5F9] hover:text-[#22A6BF] font-mono text-xs font-semibold transition-colors"
+                        >
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Repositorio</span>
+                        </a>
+                        {% else %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] font-mono text-[11px] text-slate-500 dark:text-[#94A3B8]">
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <span>Repo Privado</span>
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- =======================================================================
+         ESTADO VACÍO (SIN RESULTADOS DE FILTRO O SIN PROYECTOS PUBLICADOS)
+         ======================================================================= -->
+    <div id="projects-empty-state" class="{% if projects %}hidden {% endif %}rounded-2xl border border-dashed border-slate-300 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] p-10 text-center space-y-4">
+        <div class="w-12 h-12 mx-auto rounded-xl border border-[#22A6BF]/30 bg-[#22A6BF]/10 text-[#22A6BF] flex items-center justify-center" aria-hidden="true">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+        </div>
+        {% if projects %}
+        <div class="space-y-1">
+            <h2 class="font-heading text-lg font-bold text-slate-900 dark:text-[#F1F5F9]">
+                No hay proyectos que coincidan con el filtro actual
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-[#94A3B8]">
+                Probá combinando otra categoría funcional o limpiando la búsqueda de tecnología.
+            </p>
+        </div>
+        <button
+            id="empty-reset-filters-btn"
+            type="button"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#22A6BF] hover:bg-[#1B8599] text-white font-mono text-xs font-semibold transition-colors cursor-pointer"
+        >
+            <span>Mostrar todos los proyectos</span>
+        </button>
+        {% else %}
+        <div class="space-y-1">
+            <h2 class="font-heading text-lg font-bold text-slate-900 dark:text-[#F1F5F9]">
+                Catálogo en preparación
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-[#94A3B8]">
+                Aún no hay proyectos visibles publicados desde el panel de administración.
+            </p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- =======================================================================
+         MODAL VISOR DE DOCUMENTACIÓN TÉCNICA (MARKDOWN + PDF)
+         ======================================================================= -->
+    <div
+        id="project-docs-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="docs-modal-title"
+        class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 bg-slate-950/75 backdrop-blur-xs"
+    >
+        <div class="w-full max-w-3xl max-h-[88vh] flex flex-col overflow-hidden rounded-2xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] shadow-2xl">
+            <!-- Header del modal -->
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] flex items-start justify-between gap-4">
+                <div class="space-y-1.5 min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span id="docs-modal-category" class="px-2 py-0.5 rounded-md bg-[#22A6BF]/15 border border-[#22A6BF]/30 font-mono text-[11px] font-semibold text-[#22A6BF]"></span>
+                        <span id="docs-modal-type" class="px-2 py-0.5 rounded-md border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-600 dark:text-[#94A3B8]"></span>
+                    </div>
+                    <h2 id="docs-modal-title" class="font-heading text-xl font-bold text-slate-900 dark:text-[#F1F5F9] truncate"></h2>
+                </div>
+
+                <button
+                    id="close-docs-modal-btn"
+                    type="button"
+                    aria-label="Cerrar documentación técnica"
+                    class="p-2 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] text-slate-500 dark:text-[#94A3B8] hover:border-[#22A6BF] hover:text-[#22A6BF] transition-colors cursor-pointer shrink-0"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Cuerpo Markdown -->
+            <div id="docs-modal-content" class="p-6 overflow-y-auto space-y-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300"></div>
+
+            <!-- Pie de acciones -->
+            <div class="px-6 py-4 border-t border-slate-200 dark:border-[#1E2D3D] bg-slate-50 dark:bg-[#0B1118] flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <a
+                        id="docs-modal-pdf-link"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="hidden inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#22A6BF] hover:bg-[#1B8599] text-white font-mono text-xs font-semibold transition-colors shadow-xs"
+                    >
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        <span>Descargar Documentación (PDF)</span>
+                    </a>
+                    <a
+                        id="docs-modal-live-link"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="hidden inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] hover:border-[#22A6BF] text-slate-700 dark:text-[#F1F5F9] hover:text-[#22A6BF] font-mono text-xs font-semibold transition-colors"
+                    >
+                        <span>Abrir Enlace</span>
+                    </a>
+                </div>
+
+                <button
+                    type="button"
+                    data-close-docs-modal
+                    class="px-4 py-2 rounded-xl border border-slate-200 dark:border-[#1E2D3D] bg-white dark:bg-[#131C26] hover:border-[#22A6BF] text-slate-600 dark:text-[#94A3B8] hover:text-[#22A6BF] font-mono text-xs font-semibold transition-colors cursor-pointer"
+                >
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{{ catalog_payload|json_script:"projects-catalog-data" }}
+{% endblock content %}
+
+{% block extra_js %}
+<script defer src="{% static 'proyectos/js/proyectos.js' %}"></script>
+{% endblock extra_js %}
